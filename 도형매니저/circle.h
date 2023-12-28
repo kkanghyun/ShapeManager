@@ -28,5 +28,6 @@ public:
 	~Circle();								// 소멸자를 프로그램할 필요가 없다는 것을 생각해 보자
 
 	virtual void draw() const override;
+	virtual void insertPoint() override;
 };
 

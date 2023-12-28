@@ -7,7 +7,8 @@
 class Shape {
 public:
 	Shape() {};
-	~Shape() {};
+	virtual ~Shape() {};
 
 	virtual void draw() const = 0;			// pure virtual function
+	virtual void insertPoint() {};
 };

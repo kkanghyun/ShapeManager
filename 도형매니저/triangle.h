@@ -16,5 +16,6 @@ public:
 	~Triangle();
 
 	virtual void draw() const override;			// virtual function¿ª overriding
+	virtual void insertPoint() override;
 };
 

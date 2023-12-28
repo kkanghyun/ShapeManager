@@ -26,3 +26,25 @@ void Triangle::draw() const
 		<< p2.x << "," << p2.y << "), ("
 		<< p3.x << "," << p3.y << ")" << '\n';
 }
+
+void Triangle::insertPoint()
+{
+	std::cout << "p1 x: ";
+	std::cin >> p1.x;
+	std::cout << "p1 y: ";
+	std::cin >> p1.y;
+
+	std::cout << '\n';
+
+	std::cout << "p2 x: ";
+	std::cin >> p2.x;
+	std::cout << "p2 y: ";
+	std::cin >> p2.y;
+
+	std::cout << '\n';
+
+	std::cout << "p3 x: ";
+	std::cin >> p3.x;
+	std::cout << "p3 y: ";
+	std::cin >> p3.y;
+}

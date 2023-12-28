@@ -25,3 +25,18 @@ void Rectangle::draw() const
 	std::cout << "»ç°¢Çü - (" << p1.x << "," << p1.y << "), ("
 		<< p2.x << "," << p2.y << ")" << '\n';
 }
+
+void Rectangle::insertPoint()
+{
+	std::cout << "p1 x: ";
+	std::cin >> p1.x;
+	std::cout << "p1 y: ";
+	std::cin >> p1.y;
+
+	std::cout << '\n';
+
+	std::cout << "p2 x: ";
+	std::cin >> p2.x;
+	std::cout << "p2 y: ";
+	std::cin >> p2.y;
+}

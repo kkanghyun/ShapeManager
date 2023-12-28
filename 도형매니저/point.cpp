@@ -17,3 +17,9 @@ Point::Point(double a, double b)
 	: x(a), y(b)
 {
 }
+
+void Point::clear()
+{
+	x = 0.0;
+	y = 0.0;
+}

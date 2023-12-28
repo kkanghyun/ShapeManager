@@ -7,6 +7,8 @@
 
 #include "shape.h"
 
+enum class EShape { CIRCLE, TRIANGLE, RECTANGLE };
+
 class ShapeManager {
 	int nShape;							// 현재 관리 중인 도형의 갯수
 	int capacity;						// 확보한 메모리에 담을 수 있는 도형의 최대 개수
@@ -14,7 +16,7 @@ class ShapeManager {
 
 public:
 	explicit ShapeManager(int n);		// 담을 수 있는 도형의 갯수를 생성자에 전달
-										// explict 사용법을 알아보자
+										// explicit 사용법을 알아보자
 	~ShapeManager();
 	ShapeManager(const ShapeManager&) = default;
 

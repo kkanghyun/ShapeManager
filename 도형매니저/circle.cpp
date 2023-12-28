@@ -29,3 +29,16 @@ void Circle::draw() const
 	std::cout << "원 - 중심점(" << center.x << "," << center.y
 		<< ") 반지름 " << rad << '\n';
 }
+
+void Circle::insertPoint()
+{
+	std::cout << "center x: ";
+	std::cin >> center.x;
+	std::cout << "center y: ";
+	std::cin >> center.y;
+
+	std::cout << '\n';
+
+	std::cout << "rad: ";
+	std::cin >> rad;
+}

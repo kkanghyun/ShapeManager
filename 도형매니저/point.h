@@ -10,4 +10,6 @@ struct Point {									// struct - default public
 	Point();									// default constructor - 스페셜 함수
 	Point(double a, double b);
 	Point(const Point& other) = default;		// 복사생성자 - 사용자가 만들 필요 없다는 의미
+
+	void clear();
 };
