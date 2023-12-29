@@ -7,7 +7,8 @@
 
 Engine::Engine() :
     m_enable{ false },
-    m_shapeManager{ new ShapeManager{100} }
+    // 1. 관리 클래스를 만듦		
+    m_shapeManager{ new ShapeManager{20} } // 최대 20개의 도형을 관리함
 {
 }
 
@@ -17,10 +18,7 @@ Engine::~Engine()
 }
 
 bool Engine::init()
-{
-    // 1. 관리 클래스를 만듦
-    ShapeManager sm(100);					// 최대 100개의 도형을 관리함
-
+{	
     // 2. 도형들을 관리 클래스에 삽입함
     m_shapeManager->insert(new Triangle());
     m_shapeManager->insert(new Triangle(Point(0, 0), Point(1, 1), Point(2, 2)));
@@ -81,7 +79,6 @@ void Engine::insertMenu()
 
         switch (input) {
         case EMenu_Insert::NONE:
-            system("pause");
             continue;
         case EMenu_Insert::TRIANGLE:
             insertShape<Triangle>();
@@ -207,7 +204,7 @@ EMenu_Main Engine::inputMenu_Main()
 {
     std::cout << "input: ";
     std::string str;
-    std::getline(std::cin, str);
+    std::cin >> str;
 
     std::cout << '\n';
 
@@ -239,11 +236,14 @@ EMenu_Insert Engine::inputMenu_Insert()
 {
     std::cout << "input: ";
     std::string str;
-    std::getline(std::cin, str);
+    std::cin >> str;
 
     std::cout << '\n';
 
     int input{};
+
+    if (str.empty())
+        return EMenu_Insert::NONE;
 
     try {
         input = std::stoi(str);
@@ -271,7 +271,7 @@ EMenu_Erase Engine::inputMenu_Erase()
 {
     std::cout << "input: ";
     std::string str;
-    std::getline(std::cin, str);
+    std::cin >> str;
 
     std::cout << '\n';
 
@@ -309,7 +309,7 @@ int Engine::inputMenu_EraseNum()
     std::cout << "0 ~ " << m_shapeManager->getShapeCount() - 1 << "번 사이의 번호를 입력해주세요" << '\n';
     std::cout << "몇 번째 도형을 제거하시겠습니까? - ";
     std::string str;
-    std::getline(std::cin, str);
+    std::cin >> str;
 
     std::cout << '\n';
 

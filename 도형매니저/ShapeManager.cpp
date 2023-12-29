@@ -20,6 +20,17 @@ ShapeManager::~ShapeManager()
 
 void ShapeManager::insert(Shape* a)
 {
+	if (nShape + 1 == capacity) {
+		capacity *= 2;
+		Shape** newShapes{ new Shape * [capacity] };
+		for (int i = 0; i < nShape; ++i) {
+			newShapes[i] = shapes[i];
+		}
+
+		delete[] shapes;
+		shapes = newShapes;
+	}
+
 	shapes[nShape] = a;
 	nShape++;
 }
