@@ -3,8 +3,8 @@
 #include "ShapeManager.h"
 
 enum class EMenu_Main { NONE, INSERT, DELETE, DRAW, SAVE, LOAD, EXIT };
-enum class EMenu_Insert { NONE, TRIANGLE, RECTANGLE, CIRCLE, BACK };
-enum class EMenu_Erase { NONE, TRIANGLE, RECTANGLE, CIRCLE, NUM, BACK };
+enum class EMenu_Insert { NONE, TRIANGLE, RECTANGLE, CIRCLE, LINE, BACK };
+enum class EMenu_Erase { NONE, TRIANGLE, RECTANGLE, CIRCLE, LINE, NUM, BACK };
 
 class Engine {
 	bool m_enable;

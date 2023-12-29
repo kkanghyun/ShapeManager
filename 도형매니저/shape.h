@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
-enum class EShape { CIRCLE, TRIANGLE, RECTANGLE };
+enum class EShape { CIRCLE, TRIANGLE, RECTANGLE, LINE };
 
 #include <fstream>
 

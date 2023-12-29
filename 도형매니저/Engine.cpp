@@ -5,6 +5,7 @@
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
+#include "Line.h"
 
 Engine::Engine() :
     m_enable{ false },
@@ -98,6 +99,9 @@ void Engine::insertMenu()
         case EMenu_Insert::CIRCLE:
             insertShape<Circle>();
             break;
+        case EMenu_Insert::LINE:
+            insertShape<Line>();
+            break;
         case EMenu_Insert::BACK:
             enable = false;
             break;
@@ -132,6 +136,10 @@ void Engine::eraseMenu()
         case EMenu_Erase::CIRCLE:
             str = "원";
             eraseCount = m_shapeManager->erase<Circle>();
+            break;
+        case EMenu_Erase::LINE:
+            str = "라인";
+            eraseCount = m_shapeManager->erase<Line>();
             break;
         case EMenu_Erase::NUM:
         {
@@ -186,7 +194,8 @@ void Engine::printMenu_Insert()
     std::cout << "1. 삼각형" << '\n';
     std::cout << "2. 사각형" << '\n';
     std::cout << "3. 원" << '\n';
-    std::cout << "4. 뒤로가기" << '\n';
+    std::cout << "4. 라인" << '\n';
+    std::cout << "5. 뒤로가기" << '\n';
 }
 
 void Engine::printMenu_Erase()
@@ -199,8 +208,9 @@ void Engine::printMenu_Erase()
     std::cout << "1. 삼각형" << '\n';
     std::cout << "2. 사각형" << '\n';
     std::cout << "3. 원" << '\n';
-    std::cout << "4. 번호로 제거" << '\n';
-    std::cout << "5. 뒤로가기" << '\n';
+    std::cout << "4. 라인" << '\n';
+    std::cout << "5. 번호로 제거" << '\n';
+    std::cout << "6. 뒤로가기" << '\n';
 }
 
 void Engine::printExit()

@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="circle.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="shape.h" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="ShapeManager.cpp" />

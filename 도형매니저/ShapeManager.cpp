@@ -4,6 +4,7 @@
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
+#include "Line.h"
 using namespace std;
 
 ShapeManager::ShapeManager(int n)
@@ -124,6 +125,11 @@ void ShapeManager::load(std::ifstream& in)
 			Rectangle* rectangle = new Rectangle;
 			rectangle->load(in);
 			insert(rectangle);
+		}
+		else if (str == "¶óÀÎ") {
+			Line* line = new Line;
+			line->load(in);
+			insert(line);
 		}
 	}
 
