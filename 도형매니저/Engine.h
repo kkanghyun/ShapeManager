@@ -2,7 +2,7 @@
 
 #include "ShapeManager.h"
 
-enum class EMenu_Main { NONE, INSERT, DELETE, DRAW, EXIT };
+enum class EMenu_Main { NONE, INSERT, DELETE, DRAW, SAVE, LOAD, EXIT };
 enum class EMenu_Insert { NONE, TRIANGLE, RECTANGLE, CIRCLE, BACK };
 enum class EMenu_Erase { NONE, TRIANGLE, RECTANGLE, CIRCLE, NUM, BACK };
 
@@ -36,5 +36,8 @@ private:
 		shape->insertPoint();
 		m_shapeManager->insert(shape);
 	}
+
+	void save();
+	void load();
 };
 

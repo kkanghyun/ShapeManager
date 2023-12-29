@@ -17,5 +17,7 @@ public:
 
 	virtual void draw() const override;			// virtual function¿ª overriding
 	virtual void insertPoint() override;
+	virtual void save(std::ofstream& out);
+	virtual void load(std::ifstream& in);
 };
 

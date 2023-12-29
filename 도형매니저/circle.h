@@ -29,5 +29,7 @@ public:
 
 	virtual void draw() const override;
 	virtual void insertPoint() override;
+	virtual void save(std::ofstream& out);
+	virtual void load(std::ifstream& in);
 };
 

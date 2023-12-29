@@ -1,5 +1,6 @@
 #include "rectangle.h"
 #include <iostream>
+#include <string>
 
 Rectangle::Rectangle()
 	: p1(), p2()
@@ -40,4 +41,25 @@ void Rectangle::insertPoint()
 	std::cin >> p2.x;
 	std::cout << "p2 y: ";
 	std::cin >> p2.y;
+}
+
+void Rectangle::save(std::ofstream& out)
+{
+	out << "»ç°¢Çü - (" << std::to_string(p1.x) << "," << std::to_string(p1.y) << "), ("
+		<< std::to_string(p2.x) << "," << std::to_string(p2.y) << ")" << '\n';
+}
+
+void Rectangle::load(std::ifstream& in)
+{
+	std::string str;
+	char buf[100];
+	in.getline(buf, 100, '(');
+	in >> p1.x;
+	in.getline(buf, 100, ',');
+	in >> p1.y;
+	in.getline(buf, 100, '(');
+	in >> p2.x;
+	in.getline(buf, 100, ',');
+	in >> p2.y;
+	in.getline(buf, 100);
 }

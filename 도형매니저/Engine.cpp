@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "circle.h"
 #include "triangle.h"
 #include "rectangle.h"
@@ -58,6 +59,14 @@ void Engine::run()
         case EMenu_Main::DRAW:
             // 3. 관리하고 있는 모든 도형을 그림
             m_shapeManager->draw();
+            system("pause");
+            break;
+        case EMenu_Main::SAVE:
+            save();
+            system("pause");
+            break;
+        case EMenu_Main::LOAD:
+            load();
             system("pause");
             break;
         case EMenu_Main::EXIT:
@@ -162,7 +171,9 @@ void Engine::printMenu_Main()
     std::cout << "1. 원하는 도형 추가" << '\n';
     std::cout << "2. 원하는 도형 제거" << '\n';
     std::cout << "3. 전체 도형을 그리기" << '\n';
-    std::cout << "4. 프로그램 끝내기" << '\n';
+    std::cout << "4. 파일에 저장하기" << '\n';
+    std::cout << "5. 파일에서 읽어오기" << '\n';
+    std::cout << "6. 프로그램 끝내기" << '\n';
 }
 
 void Engine::printMenu_Insert()
@@ -335,4 +346,24 @@ int Engine::inputMenu_EraseNum()
     }
 
     return input;
+}
+
+void Engine::save()
+{
+    std::ofstream out{ "도형 데이터.txt" };
+    if (not out) {
+        std::cout << "파일을 생성하지 못하였습니다." << '\n';
+    }
+
+    m_shapeManager->save(out);
+}
+
+void Engine::load()
+{
+    std::ifstream in{ "도형 데이터.txt" };
+    if (not in) {
+        std::cout << "파일이 존재하지 않습니다." << '\n';
+    }
+
+    m_shapeManager->load(in);
 }

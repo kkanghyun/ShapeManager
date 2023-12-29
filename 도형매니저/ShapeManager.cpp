@@ -1,5 +1,9 @@
 #include "ShapeManager.h"
 #include <iostream>
+#include <string>
+#include "circle.h"
+#include "triangle.h"
+#include "rectangle.h"
 using namespace std;
 
 ShapeManager::ShapeManager(int n)
@@ -79,6 +83,51 @@ void ShapeManager::clearShapes()
 		delete shapes[i];
 	}
 	delete[] shapes;
+
+	nShape = 0;
+}
+
+void ShapeManager::save(std::ofstream& out)
+{
+	out << std::to_string(capacity) << '\n';
+	out << std::to_string(nShape) << '\n';
+	for (int i = 0; i < nShape; ++i) {
+		shapes[i]->save(out);
+	}
+}
+
+void ShapeManager::load(std::ifstream& in)
+{
+	clearShapes();
+
+	std::string str;
+	in >> str;
+	capacity = stoi(str);
+	in >> str;
+	int size = stoi(str);
+
+	shapes = new Shape * [capacity];
+
+	for (int i = 0; i < size; ++i) {
+		in >> str;
+		if (str == "원") {
+			Circle* circle = new Circle;
+			circle->load(in);
+			insert(circle);
+		}
+		else if (str == "삼각형") {
+			Triangle* triangle = new Triangle;
+			triangle->load(in);
+			insert(triangle);
+		}
+		else if (str == "사각형") {
+			Rectangle* rectangle = new Rectangle;
+			rectangle->load(in);
+			insert(rectangle);
+		}
+	}
+
+	int a = 0;
 }
 
 int ShapeManager::getShapeCount() const

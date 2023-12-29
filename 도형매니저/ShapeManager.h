@@ -6,6 +6,7 @@
 #pragma once
 
 #include "shape.h"
+#include <fstream>
 
 class ShapeManager {
 	int nShape;							// 현재 관리 중인 도형의 갯수
@@ -51,6 +52,8 @@ public:
 
 	void draw() const;					// 전체 도형을 그리는 함수
 	void clearShapes();
+	void save(std::ofstream& out);
+	void load(std::ifstream& in);
 
 	int getShapeCount() const;
 };

@@ -1,5 +1,6 @@
 #include "circle.h"
 #include <iostream>
+#include <string>
 
 Circle::Circle() 
 	: center(), rad(0.0)
@@ -42,4 +43,25 @@ void Circle::insertPoint()
 
 	std::cout << "rad: ";
 	std::cin >> rad;
+}
+
+void Circle::save(std::ofstream& out)
+{
+	out << "원 - 중심점(" << std::to_string(center.x) << "," << std::to_string(center.y)
+		<< ") 반지름 " << std::to_string(rad) << '\n';
+}
+
+void Circle::load(std::ifstream& in)
+{
+	std::string str;
+	char buf[100];
+	in.getline(buf, 100, '(');
+	in >> center.x;
+	in.getline(buf, 100, ',');
+	in >> center.y;
+	while (in >> str) {
+		if (str == "반지름")
+			break;
+	}
+	in >> rad;
 }
