@@ -12,6 +12,7 @@ Circle::Circle()
 Circle::Circle(const Point& c, double r)
 	: center(c), rad(r)
 {
+	setType(EShape::CIRCLE);
 }
 
 Circle::Circle(const Circle& other)

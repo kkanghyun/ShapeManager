@@ -7,8 +7,6 @@
 
 #include "shape.h"
 
-enum class EShape { CIRCLE, TRIANGLE, RECTANGLE };
-
 class ShapeManager {
 	int nShape;							// 현재 관리 중인 도형의 갯수
 	int capacity;						// 확보한 메모리에 담을 수 있는 도형의 최대 개수
@@ -21,6 +19,39 @@ public:
 	ShapeManager(const ShapeManager&) = default;
 
 	void insert(Shape* a);				// 도형을 추가하는 함수
+	bool erase(int idx);
+
+	template <class T>
+	int erase() {
+		Shape** newShapes{ new Shape * [capacity] };
+		int idx{};
+		int cnt{};
+		for (int i = 0; i < nShape; ++i) {
+			if (dynamic_cast<T*>(shapes[i])) {
+				delete shapes[i];
+				++cnt;
+			}
+			else {
+				newShapes[idx] = shapes[i];
+				++idx;
+			}
+		}
+
+		if (cnt == 0) {
+			delete[] newShapes;
+			return cnt;
+		}
+
+		delete[] shapes;
+		nShape -= cnt;
+		shapes = newShapes;
+
+		return cnt;
+	}
+
 	void draw() const;					// 전체 도형을 그리는 함수
+	void clearShapes();
+
+	int getShapeCount() const;
 };
 

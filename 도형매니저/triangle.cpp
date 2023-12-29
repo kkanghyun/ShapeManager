@@ -4,6 +4,7 @@
 Triangle::Triangle()
 	: p1(), p2(), p3()
 {
+	setType(EShape::TRIANGLE);
 }
 
 Triangle::Triangle(const Point& a, const Point& b, const Point& c)

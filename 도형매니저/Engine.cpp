@@ -49,9 +49,13 @@ void Engine::run()
 
         switch (input) {
         case EMenu_Main::NONE:
+            system("pause");
             continue;
         case EMenu_Main::INSERT:
             insertMenu();
+            break;
+        case EMenu_Main::DELETE:
+            eraseMenu();
             break;
         case EMenu_Main::DRAW:
             // 3. 관리하고 있는 모든 도형을 그림
@@ -77,6 +81,7 @@ void Engine::insertMenu()
 
         switch (input) {
         case EMenu_Insert::NONE:
+            system("pause");
             continue;
         case EMenu_Insert::TRIANGLE:
             insertShape<Triangle>();
@@ -94,6 +99,62 @@ void Engine::insertMenu()
     }
 }
 
+void Engine::eraseMenu()
+{
+    bool enable{ true };
+    while (enable) {
+        system("cls");
+
+        printMenu_Erase();
+        EMenu_Erase input{ inputMenu_Erase() };
+
+        std::string str{};
+        int eraseCount{};
+
+        switch (input) {
+        case EMenu_Erase::NONE:
+            system("pause");
+            continue;
+        case EMenu_Erase::TRIANGLE:
+            str = "삼각형";
+            eraseCount = m_shapeManager->erase<Triangle>();
+            break;
+        case EMenu_Erase::RECTANGLE:
+            str = "사각형";
+            eraseCount = m_shapeManager->erase<Rectangle>();
+            break;
+        case EMenu_Erase::CIRCLE:
+            str = "원";
+            eraseCount = m_shapeManager->erase<Circle>();
+            break;
+        case EMenu_Erase::NUM:
+        {
+            int idx = inputMenu_EraseNum();
+            if (idx != -1) {
+                m_shapeManager->erase(idx);
+                std::cout << idx << "번 도형이 성공적으로 제거되었습니다." << '\n';
+            }
+            system("pause");
+        }
+            break;
+        case EMenu_Erase::BACK:
+            enable = false;
+            break;
+        }
+
+        if (not str.empty()) {
+            if (eraseCount == 0) {
+                std::cout << str << "이(가) 존재하지 않습니다." << '\n';
+            }
+            else {
+                std::cout << eraseCount << "개의 " << str << "이 제거되었습니다." << '\n';
+            }
+
+            system("pause");
+        }
+    }
+}
+
 void Engine::printMenu_Main()
 {
     std::cout << "-------------------------------------------" << '\n';
@@ -102,8 +163,9 @@ void Engine::printMenu_Main()
     std::cout << '\n';
 
     std::cout << "1. 원하는 도형 추가" << '\n';
-    std::cout << "2. 전체 도형을 그리기" << '\n';
-    std::cout << "3. 프로그램 끝내기" << '\n';
+    std::cout << "2. 원하는 도형 제거" << '\n';
+    std::cout << "3. 전체 도형을 그리기" << '\n';
+    std::cout << "4. 프로그램 끝내기" << '\n';
 }
 
 void Engine::printMenu_Insert()
@@ -119,6 +181,20 @@ void Engine::printMenu_Insert()
     std::cout << "4. 뒤로가기" << '\n';
 }
 
+void Engine::printMenu_Erase()
+{
+    std::cout << "-------------------------------------------" << '\n';
+    std::cout << "원하는 도형 제거" << '\n';
+    std::cout << "-------------------------------------------" << '\n';
+    std::cout << '\n';
+
+    std::cout << "1. 삼각형" << '\n';
+    std::cout << "2. 사각형" << '\n';
+    std::cout << "3. 원" << '\n';
+    std::cout << "4. 번호로 제거" << '\n';
+    std::cout << "5. 뒤로가기" << '\n';
+}
+
 void Engine::printExit()
 {
     std::cout << "-------------------------------------------" << '\n';
@@ -131,17 +207,30 @@ EMenu_Main Engine::inputMenu_Main()
 {
     std::cout << "input: ";
     std::string str;
-    std::cin >> str;
+    std::getline(std::cin, str);
 
     std::cout << '\n';
 
-    if (str.length() > 1)
-        return EMenu_Main::NONE;
+    int input{};
 
-    int input{ std::stoi(str) };
-    
-    if (input <= static_cast<int>(EMenu_Main::NONE) || input > static_cast<int>(EMenu_Main::EXIT))
+    try {
+        input = std::stoi(str);
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
         return EMenu_Main::NONE;
+    }
+    catch (std::out_of_range& e) {
+        std::cout << "변환할 수 있는 값을 초과하였습니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return EMenu_Main::NONE;
+    }
+
+    if (input <= static_cast<int>(EMenu_Main::NONE) || input > static_cast<int>(EMenu_Main::EXIT)) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        return EMenu_Main::NONE;
+    }
 
     return static_cast<EMenu_Main>(input);
 }
@@ -150,17 +239,100 @@ EMenu_Insert Engine::inputMenu_Insert()
 {
     std::cout << "input: ";
     std::string str;
-    std::cin >> str;
+    std::getline(std::cin, str);
 
     std::cout << '\n';
 
-    if (str.length() > 1)
-        return EMenu_Insert::NONE;
+    int input{};
 
-    int input{ std::stoi(str) };
-
-    if (input <= static_cast<int>(EMenu_Insert::NONE) || input > static_cast<int>(EMenu_Insert::BACK))
+    try {
+        input = std::stoi(str);
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
         return EMenu_Insert::NONE;
+    }
+    catch (std::out_of_range& e) {
+        std::cout << "변환할 수 있는 값을 초과하였습니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return EMenu_Insert::NONE;
+    }
+
+    if (input <= static_cast<int>(EMenu_Insert::NONE) || input > static_cast<int>(EMenu_Insert::BACK)) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        return EMenu_Insert::NONE;
+    }
 
     return static_cast<EMenu_Insert>(input);
+}
+
+EMenu_Erase Engine::inputMenu_Erase()
+{
+    std::cout << "input: ";
+    std::string str;
+    std::getline(std::cin, str);
+
+    std::cout << '\n';
+
+    int input{};
+
+    try {
+        input = std::stoi(str);
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return EMenu_Erase::NONE;
+    }
+    catch (std::out_of_range& e) {
+        std::cout << "변환할 수 있는 값을 초과하였습니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return EMenu_Erase::NONE;
+    }
+
+    if (input <= static_cast<int>(EMenu_Erase::NONE) || input > static_cast<int>(EMenu_Erase::BACK)) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        return EMenu_Erase::NONE;
+    }
+
+    return static_cast<EMenu_Erase>(input);
+}
+
+int Engine::inputMenu_EraseNum()
+{
+    if (m_shapeManager->getShapeCount() == 0) {
+        std::cout << "제거할 도형이 없습니다." << '\n';
+        return -1;
+    }
+
+    std::cout << "0 ~ " << m_shapeManager->getShapeCount() - 1 << "번 사이의 번호를 입력해주세요" << '\n';
+    std::cout << "몇 번째 도형을 제거하시겠습니까? - ";
+    std::string str;
+    std::getline(std::cin, str);
+
+    std::cout << '\n';
+
+    int input{};
+
+    try {
+        input = std::stoi(str);
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return -1;
+    }
+    catch (std::out_of_range& e) {
+        std::cout << "변환할 수 있는 값을 초과하였습니다." << '\n';
+        std::cout << "error: " << e.what() << '\n';
+        return -1;
+    }
+
+    if (input < 0 || input >= m_shapeManager->getShapeCount()) {
+        std::cout << "잘못된 입력입니다." << '\n';
+        return -1;
+    }
+
+    return input;
 }

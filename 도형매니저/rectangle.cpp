@@ -4,6 +4,7 @@
 Rectangle::Rectangle()
 	: p1(), p2()
 {
+	setType(EShape::RECTANGLE);
 }
 
 Rectangle::Rectangle(const Point& a, const Point& b)
